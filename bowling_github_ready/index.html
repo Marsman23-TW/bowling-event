@@ -14,7 +14,9 @@
       --shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
       --radius: 26px;
     }
+
     * { box-sizing: border-box; }
+
     body {
       margin: 0;
       min-height: 100vh;
@@ -25,81 +27,196 @@
       color: var(--text);
       overflow: hidden;
     }
+
     .grain {
-      position: fixed; inset: 0; pointer-events: none; opacity: 0.08;
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.08;
       background-image:
         linear-gradient(rgba(255,255,255,.2) 1px, transparent 1px),
         linear-gradient(90deg, rgba(255,255,255,.15) 1px, transparent 1px);
-      background-size: 3px 3px, 4px 4px; mix-blend-mode: soft-light;
+      background-size: 3px 3px, 4px 4px;
+      mix-blend-mode: soft-light;
     }
+
     .app {
-      position: relative; min-height: 100vh; display: grid;
-      grid-template-rows: auto 1fr auto; gap: 18px; padding: 22px;
+      position: relative;
+      min-height: 100vh;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: 18px;
+      padding: 22px;
     }
+
     .topbar {
-      display: flex; justify-content: space-between; align-items: center;
-      gap: 16px; flex-wrap: wrap;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
     }
+
     .title-wrap h1 {
-      margin: 0; font-size: clamp(26px, 4vw, 42px); line-height: 1.05; letter-spacing: 0.02em;
+      margin: 0;
+      font-size: clamp(26px, 4vw, 42px);
+      line-height: 1.05;
+      letter-spacing: 0.02em;
     }
+
     .title-wrap p {
-      margin: 8px 0 0; color: rgba(255, 246, 232, 0.82); font-size: 15px;
+      margin: 8px 0 0;
+      color: rgba(255, 246, 232, 0.82);
+      font-size: 15px;
     }
-    .controls { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+
+    .controls {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
     button {
-      border: 0; border-radius: 999px; padding: 12px 18px; font-size: 15px; font-weight: 700;
-      cursor: pointer; background: rgba(255,255,255,0.1); color: var(--text);
-      box-shadow: var(--shadow); transition: transform .18s ease, background .18s ease, opacity .18s ease;
+      border: 0;
+      border-radius: 999px;
+      padding: 12px 18px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      background: rgba(255,255,255,0.1);
+      color: var(--text);
+      box-shadow: var(--shadow);
+      transition: transform .18s ease, background .18s ease, opacity .18s ease;
       backdrop-filter: blur(10px);
     }
+
     button:hover { transform: translateY(-1px) scale(1.01); background: rgba(255,255,255,0.16); }
     button:disabled { opacity: .45; cursor: not-allowed; transform: none; }
     .primary { background: linear-gradient(135deg, #ffcf67, #ff9c5a); color: #2a160b; }
-    .stage { position: relative; display: grid; place-items: center; min-height: 0; }
-    .viewer { position: relative; width: min(1180px, 100%); aspect-ratio: 16 / 9; perspective: 1800px; }
-    .slide {
-      position: absolute; inset: 0; border-radius: var(--radius); overflow: hidden; background: var(--card);
-      box-shadow: var(--shadow); transform-origin: left center; transform-style: preserve-3d;
-      opacity: 0; pointer-events: none; transition: opacity .5s ease;
+
+    .stage {
+      position: relative;
+      display: grid;
+      place-items: center;
+      min-height: 0;
     }
-    .slide.active, .slide.prev, .slide.next { opacity: 1; }
-    .slide img { width: 100%; height: 100%; object-fit: cover; display: block; user-select: none; -webkit-user-drag: none; }
+
+    .viewer {
+      position: relative;
+      width: min(1180px, 100%);
+      aspect-ratio: 16 / 9;
+      perspective: 1800px;
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: var(--card);
+      box-shadow: var(--shadow);
+      transform-origin: left center;
+      transform-style: preserve-3d;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .5s ease;
+    }
+
+    .slide.active,
+    .slide.prev,
+    .slide.next { opacity: 1; }
+
+    .slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+
     .slide::after {
-      content: ""; position: absolute; inset: 0;
+      content: "";
+      position: absolute;
+      inset: 0;
       background: linear-gradient(90deg, rgba(0,0,0,.28), transparent 18%, transparent 82%, rgba(0,0,0,.18));
       pointer-events: none;
     }
+
     .slide.active { z-index: 3; }
     .slide.prev { z-index: 2; transform: translateX(-3%) scale(.98); filter: brightness(.72); }
     .slide.next { z-index: 1; transform: translateX(3%) scale(.98); filter: brightness(.72); }
-    .slide.flip-out { animation: flipOut .75s cubic-bezier(.25,.8,.25,1) forwards; z-index: 5; }
-    .slide.flip-in { animation: flipIn .75s cubic-bezier(.25,.8,.25,1) forwards; z-index: 4; }
+
+    .slide.flip-out {
+      animation: flipOut .75s cubic-bezier(.25,.8,.25,1) forwards;
+      z-index: 5;
+    }
+
+    .slide.flip-in {
+      animation: flipIn .75s cubic-bezier(.25,.8,.25,1) forwards;
+      z-index: 4;
+    }
+
     @keyframes flipOut {
       0%   { transform: rotateY(0deg) translateX(0); filter: brightness(1); }
       100% { transform: rotateY(-105deg) translateX(-2%); filter: brightness(.55); }
     }
+
     @keyframes flipIn {
       0%   { transform: rotateY(105deg) translateX(2%); filter: brightness(.55); }
       100% { transform: rotateY(0deg) translateX(0); filter: brightness(1); }
     }
+
     .meta {
-      display: flex; justify-content: center; align-items: center; gap: 14px; flex-wrap: wrap;
-      color: rgba(255,246,232,.92); font-weight: 700;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      color: rgba(255,246,232,.92);
+      font-weight: 700;
     }
+
     .counter, .hint {
-      background: rgba(255,255,255,.09); border: 1px solid rgba(255,255,255,.12); padding: 10px 14px;
-      border-radius: 999px; backdrop-filter: blur(8px);
+      background: rgba(255,255,255,.09);
+      border: 1px solid rgba(255,255,255,.12);
+      padding: 10px 14px;
+      border-radius: 999px;
+      backdrop-filter: blur(8px);
     }
-    .dots { display: flex; gap: 8px; align-items: center; }
+
+    .dots {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
     .dot {
-      width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,.35);
-      transition: transform .2s ease, background .2s ease; cursor: pointer;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.35);
+      transition: transform .2s ease, background .2s ease;
+      cursor: pointer;
     }
-    .dot.active { background: var(--accent); transform: scale(1.35); }
-    .tap-zone { position: absolute; top: 0; bottom: 0; width: 18%; z-index: 10; }
+
+    .dot.active {
+      background: var(--accent);
+      transform: scale(1.35);
+    }
+
+    .tap-zone {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 18%;
+      z-index: 10;
+    }
+
     .tap-left { left: 0; }
     .tap-right { right: 0; }
+
     @media (max-width: 720px) {
       .app { padding: 14px; gap: 12px; }
       .title-wrap p { font-size: 13px; }
@@ -115,7 +232,7 @@
     <div class="topbar">
       <div class="title-wrap">
         <h1>LINE ECG TB 互動翻頁相簿</h1>
-        <p>GitHub Pages 版。可按按鈕、左右鍵，或手機左右滑動翻頁。</p>
+        <p>1~5 順序完成。可按按鈕、鍵盤左右鍵，或手機左右滑動翻頁。</p>
       </div>
       <div class="controls">
         <button id="prevBtn">上一頁</button>
@@ -123,27 +240,43 @@
         <button id="nextBtn">下一頁</button>
       </div>
     </div>
+
     <div class="stage">
       <div class="viewer" id="viewer">
         <div class="tap-zone tap-left" aria-hidden="true"></div>
         <div class="tap-zone tap-right" aria-hidden="true"></div>
       </div>
     </div>
+
     <div class="meta">
       <div class="counter" id="counter">1 / 5</div>
       <div class="dots" id="dots"></div>
       <div class="hint">左右鍵 / Swipe / 點左右區域都可以翻頁</div>
     </div>
   </div>
+
   <script>
-    const images = ['image1.webp','image2.webp','image3.webp','image4.webp','image5.webp'];
+    const images = [
+      'image1.webp',
+      'image2.webp',
+      'image3.webp',
+      'image4.webp',
+      'image5.webp'
+    ];
+
     const viewer = document.getElementById('viewer');
     const counter = document.getElementById('counter');
     const dotsWrap = document.getElementById('dots');
     const prevBtn = document.getElementById('prevBtn');
     const nextBtn = document.getElementById('nextBtn');
     const autoBtn = document.getElementById('autoBtn');
-    let current = 0, isAnimating = false, autoplay = null, touchStartX = 0, touchEndX = 0;
+
+    let current = 0;
+    let isAnimating = false;
+    let autoplay = null;
+    let touchStartX = 0;
+    let touchEndX = 0;
+
     const slides = images.map((src, index) => {
       const slide = document.createElement('div');
       slide.className = 'slide';
@@ -154,6 +287,7 @@
       viewer.appendChild(slide);
       return slide;
     });
+
     images.forEach((_, index) => {
       const dot = document.createElement('button');
       dot.className = 'dot';
@@ -161,6 +295,7 @@
       dot.addEventListener('click', () => goTo(index));
       dotsWrap.appendChild(dot);
     });
+
     function render() {
       slides.forEach((slide, index) => {
         slide.className = 'slide';
@@ -168,20 +303,35 @@
         else if (index === current - 1) slide.classList.add('prev');
         else if (index === current + 1) slide.classList.add('next');
       });
-      [...dotsWrap.children].forEach((dot, index) => dot.classList.toggle('active', index === current));
+
+      [...dotsWrap.children].forEach((dot, index) => {
+        dot.classList.toggle('active', index === current);
+      });
+
       counter.textContent = `${current + 1} / ${images.length}`;
       prevBtn.disabled = current === 0;
       nextBtn.disabled = current === images.length - 1;
     }
+
     function animateTo(target) {
       if (target === current || target < 0 || target >= images.length || isAnimating) return;
       isAnimating = true;
+
+      const direction = target > current ? 'forward' : 'backward';
       const oldSlide = slides[current];
       const newSlide = slides[target];
+
       slides.forEach(slide => slide.classList.remove('flip-out', 'flip-in'));
       render();
-      oldSlide.classList.add('flip-out');
-      newSlide.classList.add('flip-in', 'active');
+
+      if (direction === 'forward') {
+        oldSlide.classList.add('flip-out');
+        newSlide.classList.add('flip-in', 'active');
+      } else {
+        newSlide.classList.add('flip-in', 'active');
+        oldSlide.classList.add('flip-out');
+      }
+
       setTimeout(() => {
         current = target;
         isAnimating = false;
@@ -189,37 +339,52 @@
         render();
       }, 760);
     }
+
     function next() { animateTo(current + 1); }
     function prev() { animateTo(current - 1); }
     function goTo(index) { animateTo(index); }
+
     function startAutoplay() {
       autoplay = setInterval(() => {
-        if (current >= images.length - 1) { stopAutoplay(); return; }
+        if (current >= images.length - 1) {
+          stopAutoplay();
+          return;
+        }
         next();
       }, 2200);
       autoBtn.textContent = '停止播放';
     }
+
     function stopAutoplay() {
       clearInterval(autoplay);
       autoplay = null;
       autoBtn.textContent = '自動播放';
     }
+
     prevBtn.addEventListener('click', prev);
     nextBtn.addEventListener('click', next);
     autoBtn.addEventListener('click', () => autoplay ? stopAutoplay() : startAutoplay());
+
     document.addEventListener('keydown', (e) => {
       if (e.key === 'ArrowRight') next();
       if (e.key === 'ArrowLeft') prev();
     });
-    viewer.addEventListener('touchstart', (e) => { touchStartX = e.changedTouches[0].screenX; }, { passive: true });
+
+    viewer.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+
     viewer.addEventListener('touchend', (e) => {
       touchEndX = e.changedTouches[0].screenX;
       const delta = touchEndX - touchStartX;
       if (Math.abs(delta) < 30) return;
-      if (delta < 0) next(); else prev();
+      if (delta < 0) next();
+      else prev();
     }, { passive: true });
+
     viewer.querySelector('.tap-left').addEventListener('click', prev);
     viewer.querySelector('.tap-right').addEventListener('click', next);
+
     render();
   </script>
 </body>
